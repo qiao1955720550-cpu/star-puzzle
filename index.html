@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星星网页 — 寻宝游戏</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/diy.css">
+  <link rel="stylesheet" href="css/picturebook.css">
+</head>
+<body>
+
+  <div id="app-frame">
+
+  <!-- ========== 开场动画层 ========== -->
+  <div id="intro-screen" class="hidden">
+    <!-- 用户提供开场动画内容，将 hidden 移除即可启用 -->
+  </div>
+
+  <!-- ========== 背景图层 ========== -->
+  <div id="bg-layer"></div>
+
+  <!-- ========== 主页 — 入口按钮 ========== -->
+  <main id="home-screen" class="screen-fade">
+    <h1 id="game-title"><img src="images/d.png" alt="星星网页"></h1>
+    <div id="home-buttons">
+      <button class="entry-btn" data-action="treasure">开 始 寻 宝</button>
+      <button class="entry-btn" data-action="picturebook">绘 本</button>
+    </div>
+
+    <button class="windmill-btn" data-action="diy" id="windmill-entry"></button>
+  </main>
+
+  <!-- 背景音乐控制 -->
+  <button id="music-toggle" title="音乐开关">♪</button>
+
+  <!-- ========== 寻宝模式 ========== -->
+  <div id="treasure-screen" class="hidden">
+    <div id="status-bar">
+      <span class="stat"><span class="stat-icon">📖</span> 故事 <span class="stat-count" id="story-count">0</span>/7</span>
+      <span class="stat"><span class="stat-icon">🧩</span> 碎片 <span class="stat-count" id="fragment-count">0</span>/6</span>
+    </div>
+    <button id="btn-back" data-action="home">← 返回主页</button>
+
+    <!-- 房间气泡按钮 -->
+    <div id="room-bubbles">
+      <button class="bubble-btn" id="btn-restore" title="还原进度"></button>
+    </div>
+
+    <canvas id="room-stars-canvas"></canvas>
+
+    <!-- 进度条 -->
+    <div id="progress-bar-container">
+      <div id="progress-bar-track">
+        <div id="progress-bar-fill"></div>
+        <button id="progress-indicator" class="progress-btn" title="当前进度"></button>
+      </div>
+      <button id="progress-endpoint" class="progress-btn" title="终点"></button>
+    </div>
+
+    <div id="room-scene">
+
+      <div class="room-item" id="item-cup"      data-id="cup"><span class="item-sprite">🫖</span><span class="item-label">水杯</span></div>
+      <div class="room-item" id="item-flower"   data-id="flower"><span class="item-sprite">🪴</span><span class="item-label">窗台盆栽</span></div>
+      <div class="room-item" id="item-book"     data-id="book"><span class="item-sprite">📚</span><span class="item-label">故事书</span></div>
+      <div class="room-item" id="item-rabbit"   data-id="rabbit"><span class="item-sprite">🐰</span><span class="item-label">布偶兔子</span></div>
+      <div class="room-item" id="item-lamp"     data-id="lamp"><span class="item-sprite">💡</span><span class="item-label">台灯</span></div>
+      <div class="room-item" id="item-doodle"   data-id="doodle"><span class="item-sprite">📄</span><span class="item-label">涂鸦画</span></div>
+      <div class="room-item" id="item-goldfish" data-id="goldfish"><span class="item-sprite">🐠</span><span class="item-label">金鱼</span></div>
+      <div class="room-item" id="item-pillow"   data-id="pillow"><span class="item-sprite"></span><span class="item-label">书</span></div>
+      <div class="room-item" id="item-clock"    data-id="clock"><span class="item-sprite"></span><span class="item-label">笔筒</span></div>
+      <div class="room-item" id="item-frame"    data-id="frame"><span class="item-sprite">🖼️</span><span class="item-label">画框</span></div>
+      <div class="room-item" id="item-musicbox" data-id="musicbox"><span class="item-sprite"></span><span class="item-label">抱枕</span></div>
+    </div>
+
+    <div id="item-toast"></div>
+  </div>
+
+  <!-- ========== 故事弹窗 ========== -->
+  <div id="story-modal" class="hidden">
+    <div class="story-diary">
+      <button class="story-close">✕</button>
+      <div class="story-left">
+        <div class="story-illustration" id="story-illustration"></div>
+      </div>
+      <div class="story-right">
+        <div class="story-item-name" id="story-item-name"></div>
+        <div class="story-text" id="story-text"></div>
+        <span class="story-continue-hint">点击任意处关闭</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 拼图界面 ========== -->
+  <div id="puzzle-screen" class="hidden">
+    <div class="puzzle-header">
+      <button class="puzzle-back" data-action="home">← 返回</button>
+      <h2>🧩 拼 图</h2>
+    </div>
+    <div id="puzzle-grid"></div>
+    <div id="puzzle-tray"></div>
+    <div id="puzzle-celebration"></div>
+  </div>
+
+  <!-- ========== DIY模式 ========== -->
+  <div id="diy-screen" class="hidden">
+    <div id="diy-floor"></div>
+    <div id="diy-toolbar">
+      <h2>🛋️ DIY 房间</h2>
+      <div class="diy-toolbar-btns">
+        <button class="diy-btn accent" id="diy-restore">↺ 还原默认</button>
+        <button class="diy-btn" id="diy-back">← 返回主页</button>
+      </div>
+    </div>
+
+    <!-- 家具 -->
+    <div class="diy-furniture" id="diy-bed"      data-furn="bed"><span class="furniture-label">床</span></div>
+    <div class="diy-furniture" id="diy-desk"     data-furn="desk"><span class="furniture-label">书桌</span></div>
+    <div class="diy-furniture" id="diy-chair"    data-furn="chair"><span class="furniture-label">椅子</span></div>
+    <div class="diy-furniture" id="diy-wardrobe" data-furn="wardrobe"><span class="furniture-label">衣柜</span></div>
+    <div class="diy-furniture" id="diy-shelf"    data-furn="shelf"><span class="furniture-label">书架</span></div>
+    <div class="diy-furniture" id="diy-rug"      data-furn="rug"><span class="furniture-label">地毯</span></div>
+  </div>
+
+  <!-- ========== 电子绘本 ========== -->
+  <div id="picturebook-screen" class="hidden">
+
+    <!-- 绘本背景纹理层 -->
+    <div id="pb-bg-layer"></div>
+
+    <!-- 返回主页按钮 -->
+    <button id="pb-back-btn">← 返回主页</button>
+
+    <!-- 经折本主体 -->
+    <div id="notebook-stage">
+
+      <!-- 合着的书本 -->
+      <div id="notebook-closed">
+        <div class="book-cover-front">
+          <div class="cover-decoration"></div>
+          <div class="cover-title">经折页<br>手账本</div>
+        </div>
+        <div class="book-spine"></div>
+        <div class="book-pages-stack"></div>
+        <div class="cover-hint">点击打开</div>
+      </div>
+
+      <!-- 展开后的经折页区域 -->
+      <div id="notebook-opened" class="hidden">
+        <div class="accordion-viewport">
+          <div class="accordion-strip" id="accordion-strip">
+            <!-- 8个对开页面板，由JS动态生成 -->
+          </div>
+        </div>
+        <!-- 关闭按钮 -->
+        <button class="close-btn" id="close-btn" title="合上">✕</button>
+        <!-- 保存按钮 -->
+        <button class="save-btn" id="save-btn" title="保存所有图片">💾 保存</button>
+        <span class="save-toast" id="save-toast">✓ 已保存</span>
+        <!-- 翻面按钮 -->
+        <button class="flip-side-btn hidden" id="flip-back-btn">翻到反面 →</button>
+        <button class="flip-side-btn hidden" id="flip-front-btn">← 翻回正面</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 隐藏的图片上传input -->
+  <input type="file" id="pb-upload-input" accept="image/*" style="display:none">
+
+  <!-- ========== 背景音乐 ========== -->
+  <audio id="bgm" loop>
+    <source src="audio/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  </div><!-- /#app-frame -->
+
+  <script src="js/game.js"></script>
+  <script src="js/diy.js"></script>
+  <script src="js/picturebook.js"></script>
+</body>
+</html>
