@@ -1,0 +1,1338 @@
+/* ========================================
+   星星网页 — 全局样式
+   ======================================== */
+
+/* === CSS 变量 === */
+:root {
+  --pink-light: #D4BFBF;
+  --pink: #CCADAD;
+  --pink-deep: #B89494;
+  --blue-light: #C5D5C5;
+  --blue: #B0C8C0;
+  --blue-deep: #8FAD9F;
+  --lavender: #C8BFD4;
+  --cream: #F5F0E8;
+  --star: #E8D5A8;
+  --text: #6B5E6B;
+  --text-light: #9B8E9B;
+  --shadow: rgba(140, 130, 140, 0.15);
+}
+
+/* === 基础重置 === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  background: #D0DCF0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === 4:3 画幅容器 === */
+#app-frame {
+  position: relative;
+  width: min(100vw, calc(100vh * 4 / 3));
+  height: min(100vh, calc(100vw * 3 / 4));
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 0 60px rgba(0,0,0,0.3);
+}
+
+/* === 背景图层 === */
+#bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('../images/53.jpg') center/cover no-repeat;
+  background-color: #D0DCF0;
+}
+
+/* === 工具类 === */
+.hidden {
+  display: none !important;
+}
+
+/* === 主页 === */
+#home-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* === 游戏标题 === */
+#game-title {
+  z-index: 1;
+  animation: titleFloat 3s ease-in-out infinite;
+  width: 85%;
+  max-width: 700px;
+}
+
+#game-title img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: titleFadeIn 2s ease forwards;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes titleFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === 按钮容器 === */
+#home-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  z-index: 1;
+}
+
+/* === 入口按钮 === */
+.entry-btn {
+  display: block;
+  width: 180px;
+  padding: 0.9rem 1.5rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.entry-btn:hover {
+  transform: scale(1.06);
+}
+
+.entry-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* 按钮图片替换 */
+.entry-btn[data-action="treasure"] {
+  background: url('../images/start.png') center/80% no-repeat;
+  font-size: 0;
+  width: 200px;
+  height: 56px;
+  padding: 0;
+  position: relative;
+  top: 5px;
+}
+
+.entry-btn[data-action="treasure"]:hover {
+  transform: scale(1.06);
+}
+
+.entry-btn[data-action="picturebook"] {
+  background: url('../images/view.png') center/contain no-repeat;
+  font-size: 0;
+  width: 234px;
+  height: 72px;
+  padding: 0;
+}
+
+.entry-btn[data-action="picturebook"]:hover {
+  transform: scale(1.06);
+}
+
+/* 小风车入口按钮 — 主页右下角 */
+#windmill-entry {
+  position: absolute;
+  bottom: calc(1.5rem + 80px);
+  right: calc(1.5rem + 190px);
+  z-index: 5;
+  width: 150px;
+  height: 150px;
+  padding: 0;
+  font-size: 0;
+  border: none;
+  background: url('../images/小风车.png') center/contain no-repeat;
+  cursor: pointer;
+  animation: windmillSpin 12s linear infinite;
+}
+
+#windmill-entry:hover {
+  animation: windmillSpinHover 6s linear infinite;
+}
+
+@keyframes windmillSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes windmillSpinHover {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.entry-btn.bounce {
+  animation: btnBounce 0.4s ease;
+}
+
+@keyframes btnBounce {
+  0%   { transform: scale(0.95); }
+  40%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* === 房间气泡按钮 === */
+#room-bubbles {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  z-index: 10;
+}
+
+.bubble-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(200, 180, 200, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.bubble-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(1.12);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* 还原按钮 — restart 图片 */
+#btn-restore {
+  background: url('../images/restart.png') center/200% no-repeat;
+}
+
+/* === 音乐按钮 === */
+#music-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 180, 200, 0.4);
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#music-toggle:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+#music-toggle.muted {
+  opacity: 0.5;
+}
+
+/* === 开场动画层 === */
+#intro-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+
+#intro-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* === 页面过渡 === */
+.screen-fade {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ========================================
+   阶段3 — 寻宝房间（像素风）
+   ======================================== */
+
+#treasure-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: url('../images/星空背景.png') center/cover no-repeat;
+}
+
+/* 星星层1 — 小星星，快闪 */
+#treasure-screen::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%;
+  z-index: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow:
+    45px 38px 0 0 #FFF,
+    120px 85px 0 0 #FFE8D0,
+    200px 42px 0 0 #FFF,
+    310px 90px 0 0 #E8F0FF,
+    430px 55px 0 0 #FFF,
+    560px 78px 0 0 #FFE8D0,
+    680px 35px 0 0 #FFF,
+    810px 95px 0 0 #E8F0FF,
+    78px 160px 0 0 #FFF,
+    190px 210px 0 0 #FFF,
+    340px 155px 0 0 #FFE8D0,
+    470px 200px 0 0 #E8F0FF,
+    620px 170px 0 0 #FFF,
+    750px 220px 0 0 #FFE8D0,
+    890px 150px 0 0 #FFF,
+    25px 300px 0 0 #E8F0FF,
+    150px 340px 0 0 #FFF,
+    280px 280px 0 0 #FFF,
+    400px 330px 0 0 #FFE8D0,
+    530px 290px 0 0 #FFF,
+    660px 350px 0 0 #E8F0FF,
+    790px 300px 0 0 #FFF,
+    920px 340px 0 0 #FFE8D0,
+    60px 430px 0 0 #FFF,
+    180px 470px 0 0 #E8F0FF,
+    310px 420px 0 0 #FFF,
+    440px 480px 0 0 #FFE8D0,
+    580px 430px 0 0 #FFF,
+    710px 490px 0 0 #FFF,
+    840px 440px 0 0 #E8F0FF,
+    100px 540px 0 0 #FFE8D0,
+    240px 560px 0 0 #FFF,
+    370px 530px 0 0 #FFF,
+    510px 570px 0 0 #E8F0FF,
+    650px 540px 0 0 #FFF,
+    780px 580px 0 0 #FFE8D0,
+    900px 530px 0 0 #FFF,
+    35px 620px 0 0 #FFF,
+    170px 650px 0 0 #E8F0FF,
+    300px 610px 0 0 #FFE8D0,
+    460px 660px 0 0 #FFF,
+    600px 630px 0 0 #FFF,
+    740px 670px 0 0 #E8F0FF,
+    870px 620px 0 0 #FFF,
+    15px 80px 0 0 #FFF,
+    490px 120px 0 0 #E8F0FF,
+    940px 200px 0 0 #FFF,
+    130px 390px 0 0 #FFE8D0,
+    550px 400px 0 0 #FFF,
+    820px 120px 0 0 #E8F0FF,
+    380px 70px 0 0 #FFF,
+    700px 440px 0 0 #FFE8D0,
+    210px 590px 0 0 #FFF,
+    90px 700px 0 0 #E8F0FF,
+    630px 90px 0 0 #FFE8D0,
+    860px 390px 0 0 #FFF,
+    500px 140px 0 0 #FFF,
+    580px 240px 0 0 #E8F0FF,
+    650px 120px 0 0 #FFE8D0,
+    720px 270px 0 0 #FFF,
+    800px 160px 0 0 #FFF,
+    880px 240px 0 0 #FFE8D0,
+    950px 280px 0 0 #E8F0FF,
+    520px 350px 0 0 #FFF,
+    610px 410px 0 0 #FFF,
+    730px 370px 0 0 #FFE8D0,
+    850px 420px 0 0 #E8F0FF,
+    920px 380px 0 0 #FFF,
+    570px 500px 0 0 #FFE8D0,
+    690px 550px 0 0 #FFF,
+    810px 510px 0 0 #FFF,
+    910px 560px 0 0 #E8F0FF,
+    550px 610px 0 0 #FFF,
+    680px 660px 0 0 #FFE8D0,
+    800px 640px 0 0 #FFF,
+    930px 610px 0 0 #FFF,
+    510px 680px 0 0 #E8F0FF,
+    640px 200px 0 0 #FFF,
+    770px 60px 0 0 #FFE8D0,
+    900px 100px 0 0 #FFF;
+  animation: starsTwinkle1 2.5s ease-in-out infinite;
+}
+
+/* 星星层2 — 稍大星星，慢闪 */
+#treasure-screen::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%;
+  z-index: 0;
+  pointer-events: none;
+  width: 2px;
+  height: 2px;
+  background: transparent;
+  box-shadow:
+    90px 50px 0 1px #FFF,
+    250px 30px 0 0 #FFF8E8,
+    380px 70px 0 1px #E0ECFF,
+    520px 40px 0 0 #FFF,
+    720px 80px 0 1px #FFF8E8,
+    880px 55px 0 0 #E0ECFF,
+    55px 190px 0 0 #FFF,
+    220px 170px 0 1px #FFF8E8,
+    410px 200px 0 0 #FFF,
+    600px 180px 0 1px #E0ECFF,
+    770px 210px 0 0 #FFF,
+    930px 160px 0 0 #FFF8E8,
+    110px 310px 0 1px #FFF,
+    290px 350px 0 0 #E0ECFF,
+    500px 320px 0 1px #FFF,
+    690px 360px 0 0 #FFF8E8,
+    850px 310px 0 0 #FFF,
+    30px 450px 0 1px #E0ECFF,
+    160px 480px 0 0 #FFF,
+    350px 440px 0 1px #FFF8E8,
+    560px 470px 0 0 #FFF,
+    760px 460px 0 1px #E0ECFF,
+    910px 480px 0 0 #FFF,
+    75px 570px 0 0 #FFF8E8,
+    270px 550px 0 1px #FFF,
+    460px 590px 0 0 #E0ECFF,
+    640px 550px 0 0 #FFF,
+    830px 590px 0 1px #FFF8E8,
+    140px 640px 0 0 #FFF,
+    330px 620px 0 1px #E0ECFF,
+    550px 650px 0 0 #FFF,
+    730px 630px 0 0 #FFF8E8,
+    890px 660px 0 1px #FFF,
+    200px 120px 0 0 #E0ECFF,
+    670px 130px 0 1px #FFF,
+    800px 500px 0 0 #FFF8E8,
+    420px 550px 0 0 #FFF,
+    40px 250px 0 1px #FFF8E8,
+    940px 380px 0 0 #FFF,
+    310px 100px 0 0 #E0ECFF,
+    180px 690px 0 1px #FFF,
+    590px 520px 0 0 #FFF8E8,
+    540px 110px 0 1px #FFF,
+    630px 190px 0 0 #E0ECFF,
+    710px 140px 0 0 #FFF8E8,
+    830px 180px 0 1px #FFF,
+    930px 230px 0 0 #E0ECFF,
+    570px 300px 0 0 #FFF,
+    690px 280px 0 1px #FFF8E8,
+    810px 340px 0 0 #FFF,
+    920px 290px 0 0 #E0ECFF,
+    540px 420px 0 1px #FFF,
+    680px 440px 0 0 #FFF8E8,
+    790px 410px 0 0 #FFF,
+    890px 430px 0 1px #E0ECFF,
+    620px 580px 0 0 #FFF,
+    750px 550px 0 1px #FFF8E8,
+    860px 570px 0 0 #FFF,
+    940px 540px 0 0 #E0ECFF,
+    510px 630px 0 0 #FFF8E8,
+    660px 610px 0 1px #FFF,
+    820px 650px 0 0 #FFF,
+    910px 620px 0 0 #FFF8E8,
+    580px 150px 0 0 #FFF,
+    880px 120px 0 1px #E0ECFF,
+    720px 510px 0 0 #FFF,
+    850px 240px 0 0 #FFF8E8;
+  animation: starsTwinkle2 3.5s ease-in-out infinite 0.8s;
+}
+
+@keyframes starsTwinkle1 {
+  0%, 100% { opacity: 0.35; }
+  25%      { opacity: 0.9; }
+  50%      { opacity: 0.45; }
+  75%      { opacity: 1; }
+}
+
+@keyframes starsTwinkle2 {
+  0%, 100% { opacity: 0.5; }
+  33%      { opacity: 1; }
+  66%      { opacity: 0.3; }
+}
+
+/* === 状态栏 === */
+#status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid rgba(200, 180, 200, 0.3);
+  z-index: 5;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+
+#status-bar .stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#status-bar .stat-icon {
+  font-size: 1.3rem;
+}
+
+#status-bar .stat-count {
+  color: var(--pink-deep);
+  font-weight: bold;
+}
+
+#btn-back {
+  position: absolute;
+  top: 10px;
+  right: 4.5rem;
+  z-index: 6;
+  padding: 0.3rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(200, 180, 200, 0.35);
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+#btn-back:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text);
+}
+
+/* === 房间容器 === */
+#room-scene {
+  position: relative;
+  z-index: 2;
+  width: 1200px;
+  height: 750px;
+  margin-top: 24px;
+  overflow: hidden;
+  background: url('../images/1.GIF') center/contain no-repeat;
+}
+
+/* === 房间像素星空画布 === */
+#room-stars-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+/* === 进度条 === */
+#progress-bar-container {
+  position: absolute;
+  bottom: calc(1.8rem + 60px);
+  left: calc(2rem + 60px);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#progress-bar-track {
+  width: 180px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  overflow: visible;
+  position: relative;
+}
+
+#progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #F8C8A0, #E8A878, #D8E8A0);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.progress-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 180, 200, 0.35);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.progress-btn:hover {
+  transform: scale(1.15);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+#progress-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  transition: left 0.5s ease;
+  width: 144px;
+  height: 144px;
+  background: url('../images/走路.png') center/contain no-repeat;
+  border: none;
+}
+
+#progress-endpoint {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  background: url('../images/星星.png') center/contain no-repeat;
+  border: none;
+}
+
+/* === 房间背景层 === */
+.room-bg {
+  position: absolute;
+  inset: 0;
+}
+
+/* 墙壁 */
+.room-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 20px,
+      rgba(220, 200, 210, 0.3) 20px,
+      rgba(220, 200, 210, 0.3) 21px
+    ),
+    linear-gradient(180deg, #F8ECF4 0%, #F0DEE8 100%);
+}
+
+/* 地板 */
+.room-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #D4B896 0px,
+      #D4B896 60px,
+      #C9A878 60px,
+      #C9A878 62px,
+      #D4B896 62px,
+      #D4B896 120px
+    );
+}
+
+/* 踢脚线 */
+.baseboard {
+  position: absolute;
+  bottom: 32%;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #B8956E;
+}
+
+/* === 窗户 === */
+.room-window {
+  position: absolute;
+  top: 8%;
+  left: 10%;
+  width: 160px;
+  height: 180px;
+  background: linear-gradient(180deg, #D4EAF8, #B8D8F0, #E8F0D0);
+  border: 8px solid #E8DDD0;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.5),
+    0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 窗格十字 */
+.room-window::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 4px;
+  background: #E8DDD0;
+}
+.room-window::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 4px;
+  background: #E8DDD0;
+}
+
+/* 窗帘 */
+.curtain {
+  position: absolute;
+  top: 6%;
+  width: 34px;
+  height: 190px;
+  background: linear-gradient(180deg, #F8D5E0, #F0C0D0);
+  border-radius: 2px;
+  animation: curtainSway 6s ease-in-out infinite;
+}
+
+.curtain.left {
+  left: calc(10% - 34px);
+  transform-origin: right center;
+}
+
+.curtain.right {
+  left: calc(10% + 160px);
+  transform-origin: left center;
+  animation-delay: 0.5s;
+}
+
+@keyframes curtainSway {
+  0%, 100% { transform: scaleX(1); }
+  50%      { transform: scaleX(0.92); }
+}
+
+/* === 床 === */
+.room-bed {
+  position: absolute;
+  right: 6%;
+  bottom: 34%;
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(180deg, #FFF, #F5ECF0);
+  border: 5px solid #E8DDD8;
+  border-radius: 4px;
+}
+
+.room-bed-head {
+  position: absolute;
+  right: 6%;
+  bottom: calc(34% + 115px);
+  width: 210px;
+  height: 40px;
+  background: #EDDDD4;
+  border: 5px solid #DDCCC0;
+  border-radius: 8px 8px 0 0;
+}
+
+/* 被子花纹 */
+.room-bed::after {
+  content: '';
+  position: absolute;
+  top: 15px; left: 15px; right: 15px; bottom: 10px;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 8px,
+      rgba(255,182,193,0.15) 8px, rgba(255,182,193,0.15) 10px);
+  border-radius: 2px;
+}
+
+/* === 书桌 === */
+.room-desk {
+  position: absolute;
+  left: 8%;
+  bottom: 32%;
+  width: 180px;
+  height: 16px;
+  background: #C8A888;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.room-desk-legs {
+  position: absolute;
+  left: 8%;
+  bottom: 22%;
+  width: 180px;
+  height: 10%;
+  background:
+    linear-gradient(90deg,
+      transparent 8px, #B8956A 8px, #B8956A 18px,
+      transparent 18px, transparent 162px,
+      #B8956A 162px, #B8956A 172px, transparent 172px
+    );
+}
+
+/* === 书架 === */
+.room-shelf {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  width: 100px;
+  height: 180px;
+  background: #D4B896;
+  border: 4px solid #C9A878;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.room-shelf::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 4px;
+  background: #C9A878;
+}
+
+/* === 地毯 === */
+.room-rug {
+  position: absolute;
+  bottom: 8%;
+  left: 25%;
+  width: 260px;
+  height: 60px;
+  background:
+    repeating-linear-gradient(45deg,
+      #F0D8E8 0px, #F0D8E8 6px,
+      #F8E8F4 6px, #F8E8F4 12px
+    );
+  border-radius: 20px;
+  border: 3px solid #E8D0E0;
+}
+
+/* ========================================
+   房间物品 — 像素风精灵（CSS box-shadow）
+   ======================================== */
+
+.room-item {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  z-index: 3;
+}
+
+.room-item:hover {
+  z-index: 4;
+}
+
+/* 物品图标 — 小气泡 */
+.item-sprite {
+  position: absolute;
+  inset: 0;
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.7), rgba(180,200,220,0.25));
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 50%;
+  font-size: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 4px rgba(255,255,255,0.3);
+  margin: auto;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, opacity 0.2s ease;
+}
+
+.room-item:hover .item-sprite {
+  opacity: 1;
+  transform: scale(1);
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.9), rgba(180,200,220,0.45));
+  box-shadow: inset 0 0 6px rgba(255,255,255,0.5), 0 0 12px rgba(200,200,230,0.5);
+}
+
+/* 物品标签 */
+.room-item .item-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: var(--text);
+  background: rgba(255,255,255,0.85);
+  padding: 2px 8px;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.room-item:hover .item-label {
+  opacity: 1;
+}
+
+/* 物品收集后的状态 */
+.room-item.collected {
+  filter: brightness(0.7) saturate(0.3);
+  pointer-events: none;
+}
+
+.room-item.collected::after {
+  content: '✓';
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background: #A8D8A8;
+  border-radius: 50%;
+  font-size: 11px;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+/* === 物品位置 === */
+/* 书桌上 */
+#item-cup      { left: 13%; bottom: 40%; }
+#item-doodle   { left: 20%; bottom: 39%; }
+#item-lamp     { left: 27%; bottom: 40%; }
+
+/* 窗台上 */
+#item-flower   { left: 16%; top: 28%; }
+
+/* 床上 */
+#item-pillow   { right: 16%; bottom: 50%; }
+#item-rabbit   { right: 22%; bottom: 48%; }
+
+/* 书架上 */
+#item-book     { right: 14%; top: 17%; }
+#item-musicbox { right: 14%; top: 42%; }
+
+/* 墙上 */
+#item-frame    { left: 32%; top: 18%; }
+#item-clock    { right: 26%; top: 26%; }
+
+/* 地面 */
+#item-goldfish { left: 38%; bottom: 16%; }
+
+/* 物品发现提示 */
+#item-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.6rem 1.5rem;
+  background: rgba(255,255,255,0.9);
+  border-radius: 24px;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px var(--shadow);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, top 0.3s ease;
+}
+
+#item-toast.show {
+  opacity: 1;
+  top: 70px;
+}
+
+#item-toast.fragment-toast {
+  background: rgba(255, 233, 160, 0.9);
+}
+
+/* ========================================
+   阶段4 — 便签故事弹窗
+   ======================================== */
+
+#story-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  animation: fadeIn 0.3s ease;
+}
+
+#story-modal.hidden {
+  display: none;
+}
+
+.story-diary {
+  position: relative;
+  width: 520px;
+  height: 580px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  overflow: hidden;
+  animation: diaryOpen 0.5s ease;
+}
+
+@keyframes diaryOpen {
+  from { transform: scale(0.8) translateY(40px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.story-left {
+  display: none;
+}
+
+.story-illustration {
+  display: none;
+}
+
+.story-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10rem 2.5rem 3rem 2.5rem;
+  background: transparent;
+  position: relative;
+}
+
+.story-item-name {
+  font-size: 0.85rem;
+  color: rgba(107, 94, 107, 0.7);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.1em;
+}
+
+.story-text {
+  font-size: 1.1rem;
+  line-height: 2;
+  color: var(--text);
+  min-height: 120px;
+  letter-spacing: 0.05em;
+  position: relative;
+  text-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* === 7个故事弹窗独立定位 === */
+/* 便签1 · 水杯 */
+.story-1 .story-diary { background-size: 95%; }
+.story-1 .story-right { padding-top: calc(10rem - 60px); padding-left: calc(2.5rem + 45px); }
+.story-1 .story-text  { width: 22em; }
+
+/* 便签2 · 盆栽 */
+.story-2 .story-diary { background-size: 100%; }
+.story-2 .story-right { padding-top: calc(10rem - 140px); padding-left: calc(2.5rem + 90px); }
+.story-2 .story-text  { width: 14em; }
+
+/* 便签3 · 故事书 */
+.story-3 .story-diary { background-size: 100%; }
+.story-3 .story-right { padding-top: 10rem; padding-left: calc(2.5rem + 65px); }
+.story-3 .story-text  { width: 18em; }
+
+/* 便签4 · 兔子 */
+.story-4 .story-diary { background-size: 100%; }
+.story-4 .story-right { padding-top: calc(10rem - 180px); padding-left: calc(2.5rem + 120px); }
+.story-4 .story-text  { width: 16em; }
+
+/* 便签5 · 台灯 */
+.story-5 .story-diary { background-size: 100%; }
+.story-5 .story-right { padding-top: calc(10rem - 10px); padding-left: calc(2.5rem + 60px); }
+.story-5 .story-text  { width: 16em; }
+
+/* 便签6 · 涂鸦画 */
+.story-6 .story-diary { background-size: 113%; }
+.story-6 .story-right { padding-top: calc(10rem - 80px); padding-left: calc(2.5rem + 50px); }
+.story-6 .story-text  { width: 19em; }
+
+/* 便签7 · 金鱼 */
+.story-7 .story-diary { background-size: 100%; }
+.story-7 .story-right { padding-top: calc(10rem - 50px); padding-left: calc(2.5rem + 80px); }
+.story-7 .story-text  { width: 17em; }
+
+/* 打字机光标 */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background: var(--pink-deep);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.6s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+.typewriter-done .typewriter-cursor {
+  display: none;
+}
+
+.story-continue-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.typewriter-done .story-continue-hint {
+  opacity: 0.7;
+  animation: hintPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.8; }
+}
+
+.story-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(200, 180, 200, 0.2);
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-light);
+  z-index: 3;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-close:hover {
+  background: rgba(200, 180, 200, 0.4);
+  color: var(--text);
+  transform: scale(1.1);
+}
+
+/* ========================================
+   阶段5 — 拼图界面
+   ======================================== */
+
+#puzzle-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(60, 55, 65, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#puzzle-screen.hidden {
+  display: none;
+}
+
+.puzzle-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.puzzle-header h2 {
+  color: rgba(255,255,255,0.8);
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+}
+
+.puzzle-back {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.puzzle-back:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* 拼图目标网格 */
+#puzzle-grid {
+  width: 452px;
+  height: 621px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.puzzle-cell {
+  position: absolute;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.12);
+  transition: background 0.2s ease;
+  pointer-events: none;
+}
+
+.puzzle-cell.highlight {
+  background: rgba(255, 233, 160, 0.12);
+}
+
+.puzzle-cell.filled {
+  background: transparent;
+  border: none;
+}
+
+/* 碎片托盘 */
+#puzzle-tray {
+  display: flex;
+  gap: 16px;
+  margin-top: 2rem;
+  padding: 1.2rem 2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  min-height: 130px;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* 碎片 */
+.puzzle-piece {
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  position: relative;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+}
+
+.puzzle-piece:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+}
+
+.puzzle-piece:active {
+  cursor: grabbing;
+}
+
+.puzzle-piece.dragging {
+  opacity: 0.6;
+  transform: scale(0.95);
+  z-index: 20;
+}
+
+.puzzle-piece.placed {
+  cursor: default;
+  pointer-events: none;
+  filter: none;
+  position: relative;
+}
+
+/* 拼图完成 */
+#puzzle-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  display: none;
+}
+
+#puzzle-celebration.active {
+  display: block;
+}
+
+.celebration-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 完整照片显现 */
+#puzzle-full-photo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 45;
+  display: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+  animation: photoReveal 0.8s ease;
+}
+
+#puzzle-full-photo.active {
+  display: block;
+}
+
+@keyframes photoReveal {
+  from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+

@@ -1,0 +1,1129 @@
+/* ========================================
+   星星网页 — 全局样式
+   ======================================== */
+
+/* === CSS 变量 === */
+:root {
+  --pink-light: #FFD1DC;
+  --pink: #FFB6C1;
+  --pink-deep: #F8A5B5;
+  --blue-light: #C5E8F0;
+  --blue: #87CEEB;
+  --blue-deep: #6BB5CC;
+  --lavender: #E8D5F0;
+  --cream: #FFF8F0;
+  --star: #FFE9A0;
+  --text: #5D4E5F;
+  --text-light: #8A7D8B;
+  --shadow: rgba(160, 140, 160, 0.2);
+}
+
+/* === 基础重置 === */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "KaiTi", "STKaiti", "Microsoft YaHei", sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* === 背景图层 === */
+#bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url('../images/42.jpg') center/cover no-repeat;
+  background-color: #0a0a2e;
+}
+
+/* === 像素星空画布（已禁用） === */
+#pixel-stars {
+  display: none;
+}
+
+/* === 工具类 === */
+.hidden {
+  display: none !important;
+}
+
+/* === 主页 === */
+#home-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20vh 0 12vh;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* === 游戏标题 === */
+#game-title {
+  z-index: 1;
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+#game-title img {
+  display: block;
+  max-width: 1000px;
+  height: auto;
+  animation: titleFadeIn 2s ease forwards;
+}
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes titleFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === 按钮容器 === */
+#home-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  z-index: 1;
+}
+
+/* === 入口按钮 === */
+.entry-btn {
+  display: block;
+  width: 180px;
+  padding: 0.9rem 1.5rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.15em;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 16px rgba(100, 120, 200, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.entry-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 24px rgba(150, 170, 240, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.entry-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.entry-btn.bounce {
+  animation: btnBounce 0.4s ease;
+}
+
+@keyframes btnBounce {
+  0%   { transform: scale(0.95); }
+  40%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* === 房间气泡按钮 === */
+#room-bubbles {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  z-index: 10;
+}
+
+.bubble-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(200, 180, 200, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.bubble-btn:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(1.12);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+}
+
+/* === 音乐按钮 === */
+#music-toggle {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 180, 200, 0.4);
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#music-toggle:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+#music-toggle.muted {
+  opacity: 0.5;
+}
+
+/* === 开场动画层 === */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+
+#intro-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* === 页面过渡 === */
+.screen-fade {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ========================================
+   阶段3 — 寻宝房间（像素风）
+   ======================================== */
+
+#treasure-screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* === 状态栏 === */
+#status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid rgba(200, 180, 200, 0.3);
+  z-index: 5;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+
+#status-bar .stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+#status-bar .stat-icon {
+  font-size: 1.3rem;
+}
+
+#status-bar .stat-count {
+  color: var(--pink-deep);
+  font-weight: bold;
+}
+
+#btn-back {
+  position: fixed;
+  top: 10px;
+  right: 4.5rem;
+  z-index: 6;
+  padding: 0.3rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(200, 180, 200, 0.35);
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+#btn-back:hover {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text);
+}
+
+/* === 房间容器 === */
+#room-scene {
+  position: relative;
+  width: 960px;
+  height: 600px;
+  margin-top: 24px;
+  border: 6px solid #C8B8C8;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(100, 80, 100, 0.25);
+  image-rendering: pixelated;
+}
+
+/* === 房间背景层 === */
+.room-bg {
+  position: absolute;
+  inset: 0;
+}
+
+/* 墙壁 */
+.room-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 20px,
+      rgba(220, 200, 210, 0.3) 20px,
+      rgba(220, 200, 210, 0.3) 21px
+    ),
+    linear-gradient(180deg, #F8ECF4 0%, #F0DEE8 100%);
+}
+
+/* 地板 */
+.room-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #D4B896 0px,
+      #D4B896 60px,
+      #C9A878 60px,
+      #C9A878 62px,
+      #D4B896 62px,
+      #D4B896 120px
+    );
+}
+
+/* 踢脚线 */
+.baseboard {
+  position: absolute;
+  bottom: 32%;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #B8956E;
+}
+
+/* === 窗户 === */
+.room-window {
+  position: absolute;
+  top: 8%;
+  left: 10%;
+  width: 160px;
+  height: 180px;
+  background: linear-gradient(180deg, #D4EAF8, #B8D8F0, #E8F0D0);
+  border: 8px solid #E8DDD0;
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.5),
+    0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 窗格十字 */
+.room-window::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  height: 4px;
+  background: #E8DDD0;
+}
+.room-window::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 4px;
+  background: #E8DDD0;
+}
+
+/* 窗帘 */
+.curtain {
+  position: absolute;
+  top: 6%;
+  width: 34px;
+  height: 190px;
+  background: linear-gradient(180deg, #F8D5E0, #F0C0D0);
+  border-radius: 2px;
+  animation: curtainSway 6s ease-in-out infinite;
+}
+
+.curtain.left {
+  left: calc(10% - 34px);
+  transform-origin: right center;
+}
+
+.curtain.right {
+  left: calc(10% + 160px);
+  transform-origin: left center;
+  animation-delay: 0.5s;
+}
+
+@keyframes curtainSway {
+  0%, 100% { transform: scaleX(1); }
+  50%      { transform: scaleX(0.92); }
+}
+
+/* === 床 === */
+.room-bed {
+  position: absolute;
+  right: 6%;
+  bottom: 34%;
+  width: 200px;
+  height: 120px;
+  background: linear-gradient(180deg, #FFF, #F5ECF0);
+  border: 5px solid #E8DDD8;
+  border-radius: 4px;
+}
+
+.room-bed-head {
+  position: absolute;
+  right: 6%;
+  bottom: calc(34% + 115px);
+  width: 210px;
+  height: 40px;
+  background: #EDDDD4;
+  border: 5px solid #DDCCC0;
+  border-radius: 8px 8px 0 0;
+}
+
+/* 被子花纹 */
+.room-bed::after {
+  content: '';
+  position: absolute;
+  top: 15px; left: 15px; right: 15px; bottom: 10px;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 8px,
+      rgba(255,182,193,0.15) 8px, rgba(255,182,193,0.15) 10px);
+  border-radius: 2px;
+}
+
+/* === 书桌 === */
+.room-desk {
+  position: absolute;
+  left: 8%;
+  bottom: 32%;
+  width: 180px;
+  height: 16px;
+  background: #C8A888;
+  border-radius: 2px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.room-desk-legs {
+  position: absolute;
+  left: 8%;
+  bottom: 22%;
+  width: 180px;
+  height: 10%;
+  background:
+    linear-gradient(90deg,
+      transparent 8px, #B8956A 8px, #B8956A 18px,
+      transparent 18px, transparent 162px,
+      #B8956A 162px, #B8956A 172px, transparent 172px
+    );
+}
+
+/* === 书架 === */
+.room-shelf {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  width: 100px;
+  height: 180px;
+  background: #D4B896;
+  border: 4px solid #C9A878;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.room-shelf::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 4px;
+  background: #C9A878;
+}
+
+/* === 地毯 === */
+.room-rug {
+  position: absolute;
+  bottom: 8%;
+  left: 25%;
+  width: 260px;
+  height: 60px;
+  background:
+    repeating-linear-gradient(45deg,
+      #F0D8E8 0px, #F0D8E8 6px,
+      #F8E8F4 6px, #F8E8F4 12px
+    );
+  border-radius: 20px;
+  border: 3px solid #E8D0E0;
+}
+
+/* ========================================
+   房间物品 — 像素风精灵（CSS box-shadow）
+   ======================================== */
+
+.room-item {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  z-index: 3;
+}
+
+.room-item::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 6px;
+  opacity: 0;
+  background: rgba(255, 233, 160, 0.4);
+  transition: opacity 0.2s ease;
+}
+
+.room-item:hover {
+  transform: scale(1.25);
+  filter: brightness(1.15);
+  z-index: 4;
+}
+
+.room-item:hover::before {
+  opacity: 1;
+}
+
+/* 物品图标 */
+.item-sprite {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* 物品标签 */
+.room-item .item-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  color: var(--text);
+  background: rgba(255,255,255,0.85);
+  padding: 2px 8px;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.room-item:hover .item-label {
+  opacity: 1;
+}
+
+/* 物品收集后的状态 */
+.room-item.collected {
+  filter: brightness(0.7) saturate(0.3);
+  pointer-events: none;
+}
+
+.room-item.collected::after {
+  content: '✓';
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background: #A8D8A8;
+  border-radius: 50%;
+  font-size: 11px;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+/* === 物品位置 === */
+/* 书桌上 */
+#item-cup      { left: 13%; bottom: 40%; }
+#item-doodle   { left: 20%; bottom: 39%; }
+#item-lamp     { left: 27%; bottom: 40%; }
+
+/* 窗台上 */
+#item-flower   { left: 16%; top: 28%; }
+
+/* 床上 */
+#item-pillow   { right: 16%; bottom: 50%; }
+#item-rabbit   { right: 22%; bottom: 48%; }
+
+/* 书架上 */
+#item-book     { right: 14%; top: 17%; }
+#item-musicbox { right: 14%; top: 42%; }
+
+/* 墙上 */
+#item-frame    { left: 32%; top: 18%; }
+#item-clock    { right: 26%; top: 26%; }
+
+/* 地面 */
+#item-goldfish { left: 38%; bottom: 16%; }
+
+/* 物品发现提示 */
+#item-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.6rem 1.5rem;
+  background: rgba(255,255,255,0.9);
+  border-radius: 24px;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 20px var(--shadow);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, top 0.3s ease;
+}
+
+#item-toast.show {
+  opacity: 1;
+  top: 70px;
+}
+
+#item-toast.fragment-toast {
+  background: rgba(255, 233, 160, 0.9);
+}
+
+/* ========================================
+   阶段4 — 日记本故事弹窗
+   ======================================== */
+
+#story-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(160, 140, 160, 0.35);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+#story-modal.hidden {
+  display: none;
+}
+
+.story-diary {
+  position: relative;
+  width: 640px;
+  height: 420px;
+  background: linear-gradient(175deg, #FFFDF8, #FDF5EC);
+  border-radius: 12px 24px 24px 12px;
+  box-shadow:
+    0 8px 40px rgba(120, 100, 120, 0.3),
+    2px 0 0 #E8DDD0,
+    inset 0 0 0 1px rgba(255,255,255,0.8);
+  display: flex;
+  overflow: hidden;
+  animation: diaryOpen 0.5s ease;
+}
+
+@keyframes diaryOpen {
+  from { transform: scale(0.8) translateY(40px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* 书脊 */
+.story-diary::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg,
+    transparent 0%, #DDD0C8 15%, #DDD0C8 85%, transparent 100%
+  );
+  z-index: 2;
+  box-shadow: -1px 0 1px rgba(0,0,0,0.05), 1px 0 1px rgba(0,0,0,0.05);
+}
+
+/* 左页 — 插图 */
+.story-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background:
+    repeating-linear-gradient(
+      0deg, transparent, transparent 28px,
+      rgba(180,200,220,0.1) 28px, rgba(180,200,220,0.1) 29px
+    );
+}
+
+.story-illustration {
+  width: 240px;
+  height: 300px;
+  border-radius: 8px;
+  border: 3px solid #E8DDD0;
+  background: linear-gradient(135deg, var(--blue-light), var(--pink-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* 右页 — 文字 */
+.story-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 2rem 2rem 2rem;
+  background:
+    repeating-linear-gradient(
+      0deg, transparent, transparent 28px,
+      rgba(180,200,220,0.1) 28px, rgba(180,200,220,0.1) 29px
+    );
+  position: relative;
+}
+
+.story-item-name {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.1em;
+}
+
+.story-text {
+  font-size: 1.15rem;
+  line-height: 2;
+  color: var(--text);
+  min-height: 160px;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+/* 打字机光标 */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background: var(--pink-deep);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: cursorBlink 0.6s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* 完成标记 */
+.typewriter-done .typewriter-cursor {
+  display: none;
+}
+
+.story-continue-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: var(--text-light);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.typewriter-done .story-continue-hint {
+  opacity: 0.7;
+  animation: hintPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.8; }
+}
+
+/* 关闭按钮 */
+.story-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(200, 180, 200, 0.2);
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-light);
+  z-index: 3;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-close:hover {
+  background: rgba(200, 180, 200, 0.4);
+  color: var(--text);
+  transform: scale(1.1);
+}
+
+/* ========================================
+   阶段5 — 拼图界面
+   ======================================== */
+
+#puzzle-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(10, 10, 30, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#puzzle-screen.hidden {
+  display: none;
+}
+
+.puzzle-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.puzzle-header h2 {
+  color: rgba(255,255,255,0.8);
+  font-size: 1.6rem;
+  letter-spacing: 0.2em;
+}
+
+.puzzle-back {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.puzzle-back:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+/* 拼图目标网格 */
+#puzzle-grid {
+  width: 420px;
+  height: 390px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.puzzle-cell {
+  position: absolute;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(255,255,255,0.12);
+  transition: background 0.2s ease;
+  pointer-events: none;
+}
+
+.puzzle-cell.highlight {
+  background: rgba(255, 233, 160, 0.12);
+}
+
+.puzzle-cell.filled {
+  background: transparent;
+  border: none;
+}
+
+/* 碎片托盘 */
+#puzzle-tray {
+  display: flex;
+  gap: 16px;
+  margin-top: 2rem;
+  padding: 1.2rem 2rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  min-height: 130px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 碎片 */
+.puzzle-piece {
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  position: relative;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+}
+
+.puzzle-piece:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+}
+
+.puzzle-piece:active {
+  cursor: grabbing;
+}
+
+.puzzle-piece.dragging {
+  opacity: 0.6;
+  transform: scale(0.95);
+  z-index: 20;
+}
+
+.puzzle-piece.placed {
+  cursor: default;
+  pointer-events: none;
+  filter: none;
+  position: relative;
+}
+
+/* 拼图完成 */
+#puzzle-celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  display: none;
+}
+
+#puzzle-celebration.active {
+  display: block;
+}
+
+.celebration-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 完整照片显现 */
+#puzzle-full-photo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 45;
+  display: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+  animation: photoReveal 0.8s ease;
+}
+
+#puzzle-full-photo.active {
+  display: block;
+}
+
+@keyframes photoReveal {
+  from { transform: translate(-50%, -50%) scale(0.9); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* ========================================
+   阶段6 — DIY房间（扁平彩色抽象童趣风）
+   ======================================== */
+
+#diy-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: #F5F0EB;
+}
+
+#diy-screen.hidden {
+  display: none;
+}
+
+/* 房间地板 */
+#diy-floor {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px),
+    #F5F0EB;
+}
+
+/* 顶部工具栏 */
+#diy-toolbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+  z-index: 5;
+}
+
+#diy-toolbar h2 {
+  font-size: 1.2rem;
+  color: var(--text);
+  letter-spacing: 0.1em;
+}
+
+.diy-toolbar-btns {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.diy-btn {
+  padding: 0.4rem 1.2rem;
+  border-radius: 24px;
+  border: 2px solid rgba(0,0,0,0.1);
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.diy-btn:hover {
+  background: #f8f0f8;
+  border-color: rgba(0,0,0,0.2);
+  transform: scale(1.04);
+}
+
+.diy-btn.accent {
+  background: #FFE9A0;
+  border-color: #F0D070;
+}
+
+.diy-btn.accent:hover {
+  background: #FFF0C0;
+}
+
+/* 家具 */
+.diy-furniture {
+  position: absolute;
+  cursor: grab;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  user-select: none;
+  z-index: 2;
+}
+
+.diy-furniture:hover {
+  z-index: 4;
+}
+
+.diy-furniture:active {
+  cursor: grabbing;
+}
+
+.diy-furniture.dragging {
+  z-index: 10;
+  opacity: 0.85;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25);
+}
+
+.diy-furniture .furniture-label {
+  position: absolute;
+  bottom: -24px;
+  font-size: 0.8rem;
+  color: rgba(0,0,0,0.4);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* 家具颜色和尺寸（平铺不重叠） */
+#diy-bed      { width:200px; height:130px; background:#FFD1DC; border:3px solid #F0B8C8; border-radius:20px; top:100px; left:40px; }
+#diy-wardrobe { width:110px; height:220px; background:#E8D5F0; border:3px solid #D0B8E0; border-radius:16px; top:100px; left:280px; }
+#diy-shelf    { width:150px; height:180px; background:#D4E8D0; border:3px solid #B0D0A8; border-radius:16px; top:100px; left:430px; }
+#diy-desk     { width:160px; height:90px;  background:#C5E8F0; border:3px solid #A0D0E0; border-radius:16px; top:360px; left:40px; }
+#diy-chair    { width:80px;  height:80px;  background:#FFE9A0; border:3px solid #E8D080; border-radius:50%;  top:360px; left:280px; }
+#diy-rug      { width:240px; height:80px;  background:#F8C8B0; border:3px solid #E0A890; border-radius:40px; top:360px; left:430px; }

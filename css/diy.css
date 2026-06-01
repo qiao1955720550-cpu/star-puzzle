@@ -1,0 +1,119 @@
+/* ========================================
+   DIY房间（扁平彩色抽象童趣风）
+   ======================================== */
+
+#diy-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: var(--cream);
+}
+
+#diy-screen.hidden {
+  display: none;
+}
+
+/* 房间地板 */
+#diy-floor {
+  position: absolute;
+  inset: 0;
+  background: url('../images/房间背景.jpg') center bottom/100% auto no-repeat;
+  background-color: #F5F0EB;
+}
+
+/* 顶部工具栏 */
+#diy-toolbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+  z-index: 5;
+}
+
+#diy-toolbar h2 {
+  font-size: 1.2rem;
+  color: var(--text);
+  letter-spacing: 0.1em;
+}
+
+.diy-toolbar-btns {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.diy-btn {
+  padding: 0.4rem 1.2rem;
+  border-radius: 24px;
+  border: 2px solid rgba(0,0,0,0.1);
+  background: white;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.diy-btn:hover {
+  background: #f8f0f8;
+  border-color: rgba(0,0,0,0.2);
+  transform: scale(1.04);
+}
+
+.diy-btn.accent {
+  background: #FFE9A0;
+  border-color: #F0D070;
+}
+
+.diy-btn.accent:hover {
+  background: #FFF0C0;
+}
+
+/* 家具 */
+.diy-furniture {
+  position: absolute;
+  cursor: grab;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  user-select: none;
+  z-index: 2;
+  outline: none;
+}
+
+.diy-furniture:hover {
+  z-index: 5;
+}
+
+.diy-furniture:active,
+.diy-furniture:focus,
+.diy-furniture:focus-visible {
+  cursor: grabbing;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.diy-furniture.dragging {
+  z-index: 10;
+  opacity: 0.85;
+}
+
+.diy-furniture .furniture-label {
+  display: none;
+}
+
+/* 家具颜色和尺寸（平铺不重叠，Morandi色调） */
+#diy-bed      { width:338px; height:220px; background:url('../images/房间1.png') center/contain no-repeat; border:none; border-radius:0; top:12%; left:3%; }
+#diy-wardrobe { width:186px; height:371px; background:url('../images/房间2.png') center/contain no-repeat; border:none; border-radius:0; top:12%; left:46%; }
+#diy-shelf    { width:506px; height:608px; background:url('../images/房间3.png') center/contain no-repeat; border:none; border-radius:0; top:auto; bottom:3%; left:3%; }
+#diy-desk     { width:480px; height:270px; background:url('../images/房间4.png') center/contain no-repeat; border:none; border-radius:0; top:22%; left:3%; }
+#diy-chair    { width:384px; height:384px; background:url('../images/房间5.png') center/contain no-repeat; border:none; border-radius:0; top:auto; bottom:3%; right:3%; }
+#diy-rug      { width:720px; height:480px; background:url('../images/房间6.png') center/contain no-repeat; border:none; border-radius:0; top:auto; bottom:3%; left:18%; }
